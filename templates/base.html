@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>STAY TRADITIONAL - Traditional Men's Kurtas</title>
+  <meta name="description" content="STAY TRADITIONAL: Premium, sustainable men's kurtas blending tradition with modern style.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="brand">STAY TRADITIONAL</div>
+      <button class="nav-toggle" aria-label="Open Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li><a href="/about-Us">About Us</a></li>
+        <li><a href="/sustainability">Sustainability</a></li>
+        <li><a href="/contact-Us">Contact</a></li>
+        <li>
+          <button id="theme-toggle" aria-label="Toggle dark/light mode">
+            <span id="icon-moon">&#9790;</span>
+            <span id="icon-sun" style="display: none;">&#9728;</span>
+          </button>
+        </li>
+        <li>
+          <button id="cart-btn" aria-label="Shopping Cart">
+            <span>🛒</span><span id="cart-count">0</span>
+          </button>
+        </li>
+        <li>
+          <button id="login-btn" aria-label="User Profile">
+            <img src="/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+        {% block content %}
+            <!-- home page only -->
+        {% endblock %}
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="social-links">
+        <a href="#" aria-label="Instagram"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+        <a href="#" aria-label="Facebook"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+        <a href="#" aria-label="Twitter"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+      </div>
+      <p>STAY TRADITIONAL. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

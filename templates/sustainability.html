@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="page">
+        <div class="inside-page">
+            <!-- story text and image  -->
+            <div class="story-container">
+                <div class="story-text">
+                    <h2>OUR COMMITMENT</h2>
+                    <p> Fashion that respects, <br>the Earth.</p>
+                </div>
+                <div class="story-image">
+                    <img src="{{ url_for('static', filename='images/sustainability.jpg') }}" alt="About Us Image">
+                </div>
+            </div>
+            <!-- paragraph -->
+        </div>
+    </section>
+    <section class="page">
+        <div class="inside-page">
+            <div class="story-para"><p>At Stay Traditional, sustainability is not a trend — it is the foundation of everything we make. From the fields where our cotton grows to the hands that weave it.</p></div>
+        </div>
+    </section>
+    <section class="page">
+        <div class="inside-page">
+            <h2 class="value-heading">how we do it</h2>
+            <div class="value-grid">
+                <div class="value-card">
+                    <span class="value-card-icon">🌱</span>
+                    <h3 class="value-card-title">Natural Fabrics</h3>
+                    <p class="value-card-text">100% pure cotton, no synthetic blends</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-card-icon">🎨</span>
+                    <h3 class="value-card-title">Eco packaging</h3>
+                    <p class="value-card-text">Plant based colours, zero harmful chemicals</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-card-icon">📦</span>
+                    <h3 class="value-card-title">Eco Friendly</h3>
+                    <p class="value-card-text">Recycled paper bags, no plastic used</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-card-icon">🙌</span>
+                    <h3 class="value-card-title">Artisans Welfare</h3>
+                    <p class="value-card-text">Fair wages, safe working conditions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

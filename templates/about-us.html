@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="page">
+        <div class="inside-page">
+            <!-- story text and image  -->
+            <div class="story-container">
+                <div class="story-text">
+                    <h2>OUR STORY</h2>
+                    <p> Rooted in tradition, <br>worn with pride.</p>
+                </div>
+                <div class="story-image">
+                    <img src="{{ url_for('static', filename='images/founder-image.jpg') }}" alt="About Us Image">
+                </div>
+            </div>
+            <!-- paragraph -->
+        </div>
+    </section>
+    <section class="page">
+        <div class="inside-page">
+            <div class="story-para"><p> We started Stay Traditional in 2020 with one simple belief — that Indian ethnic wear deserves to be celebrated every single day, not just at weddings and festivals.</p></div>
+            <div class="stats-container">
+                <div class="stats-item">
+                    <span class="stats-number">1200+</span>
+                    <span class="stats-label">Orders</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-number">50+</span>
+                    <span class="stats-label">Designs</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-number">100%</span>
+                    <span class="stats-label">Cotton</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="page">
+        <div class="inside-page">
+            <h2 class="value-heading">our values</h2>
+            <div class="value-grid">
+                <div class="value-card">
+                    <span class="value-card-icon">🌿</span>
+                    <h3 class="value-card-title">Natural Fabrics</h3>
+                    <p class="value-card-text">We use only pure cotton and natural breathable materials</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-card-icon">💖</span>
+                    <h3 class="value-card-title">Community First</h3>
+                    <p class="value-card-text">We work directly with local weavers and craftspeople</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-card-icon">♻️</span>
+                    <h3 class="value-card-title">Sustainable</h3>
+                    <p class="value-card-text">Eco friendly packaging and responsible sourcing</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-card-icon">🙌</span>
+                    <h3 class="value-card-title">Hand Crafted</h3>
+                    <p class="value-card-text">Every kurta is stitched by skilled artisans in India</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

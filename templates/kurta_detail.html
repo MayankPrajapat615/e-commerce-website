@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="page">
+        <div class="inside-page">
+            <div class="product-page">
+                <div class="product-image">
+                    <img src="{{ url_for('static', filename='images/k1.jpeg') }}" alt="Green Damask Kurta">
+                </div>
+                <div class="product-info">
+                    <h3>Green Damask Kurta</h3>
+                    <p>A timeless damask weave crafted from 100% breathable cotton. Designed for festive occasions and casual elegance, this kurta blends traditional artistry with modern comfort. Hand-finished with precision stitching and a classic mandarin collar.</p>
+
+                    <div class="product-rating">
+                        ★★★★☆ <span>128 reviews</span>
+                    </div>
+                    
+                    <div class="size-container">
+                        <h4 class="size-text">Size</h4>
+                        <p class="size-title">S</p>
+                    </div>
+                    
+                    <p class="product-price">₹ 1,299 <span class="price-original">₹ 1,599</span></p>
+                    
+                    <div class="product-meta">
+                        <p><strong>Material:</strong> 100% Cotton</p>
+                        <p><strong>Fit:</strong> Regular Fit</p>
+                        <p><strong>Occasion:</strong> Festive, Casual</p>
+                        <p><strong>Care:</strong> Machine wash cold, gentle cycle</p>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="btn-add-cart">Add to Cart</button>
+                        <button class="btn-wishlist">♡</button>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="btn-buy-now" type="button">BUY NOW</button>
+                    </div>
+
+                    <div class="product-features">
+                        <div class="feat-card">
+                            <img src="{{ url_for('static', filename='icons/delivery_truck_speed_26dp_000000_FILL0_wght400_GRAD0_opsz24.svg') }}" alt="Quality Assurance">
+                            <p class="feat-text">Free Returns & Exchanges</p>
+                        </div>
+                        <div class="feat-card">
+                            <img src="{{ url_for('static', filename='icons/hand_package_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg') }}" alt="Quality Assurance">
+                            <p class="feat-text">Quality Assurance</p>
+                        </div>
+                    </div>
+                        
+                    <!-- Description / Shipping / Fabric Care Accordion -->
+                    <div class="accordion-container">
+                    
+                      <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                          <span>Description</span>
+                          <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-body">
+                          <p>A timeless damask weave crafted from 100% breathable cotton. Designed for festive occasions and casual elegance, this kurta blends traditional artistry with modern comfort. Hand-finished with precision stitching and a classic mandarin collar.</p>
+                        </div>
+                      </div>
+                  
+                      <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                          <span>Shipping</span>
+                          <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-body">
+                          <p>Free standard shipping on orders above ₹999. Delivery within 5–7 business days. Express delivery available at checkout. Orders are processed within 24 hours on business days.</p>
+                        </div>
+                      </div>
+                  
+                      <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                          <span>Fabric Care</span>
+                          <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-body">
+                          <p>Machine wash cold on a gentle cycle. Do not bleach. Tumble dry low or hang to dry. Iron on medium heat. Dry clean recommended for best results to preserve the fabric's texture and colour.</p>
+                        </div>
+                      </div>
+                  
+                    </div>
+
+                </div> 
+            </div>
+        </div>
+    </section>
+{% endblock %}

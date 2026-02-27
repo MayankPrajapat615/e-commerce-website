@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1>STAY TRADITIONAL</h1>
+        <p>Timeless Kurtas, Crafted with Heritage</p>
+        <a href="/shop" class="btn-primary">Shop Now</a>
+      </div>
+      <img src="{{ url_for('static', filename='images/k2(1).jpeg') }}" alt="Traditional Kurta" class="hero-img"/>
+    </section>
+    <!-- second-page -->
+    <section id="sec-page">
+      <!-- intro-text -->
+      <div id="intro-text">
+        <h2 id="sec-heading">style of the movement</h2>
+        <p id="sec-sub-heading">Scene-stealing looks!</p>
+      </div>
+      <!-- images -->
+      <div class="sec-image-container">
+
+        <div class="movement-card">
+          <img class="sec-image" src="{{ url_for('static', filename='images/k1.jpeg') }}" alt="" srcset="">
+          <h2 class="image-text" id="image-text-heading" >sangeet</h2>
+          <a class="image-text" id="image-text-anchor" href="/shop">explore more</a>
+        </div>
+        <div class="movement-card">
+          <img class="sec-image" src="{{ url_for('static', filename='images/k4(1).jpeg') }}" alt="" srcset="">
+          <h2 class="image-text" id="image-text-heading" >EID Edits</h2>
+          <a class="image-text" id="image-text-anchor" href="/shop">explore more</a>
+        </div>
+        <div class="movement-card">
+          <img class="sec-image" src="{{ url_for('static', filename='images/k3(1).jpeg') }}" alt="" srcset="">
+          <h2 class="image-text" id="image-text-heading" >Mehandii</h2>
+          <a class="image-text" id="image-text-anchor" href="/shop">explore more</a>
+        </div>
+        <div class="movement-card">
+          <img class="sec-image" src="{{ url_for('static', filename='images/k5(1).jpeg') }}" alt="" srcset="">
+          <h2 class="image-text" id="image-text-heading" >Haldi</h2>
+          <a class="image-text" id="image-text-anchor" href="/shop">explore more</a>
+        </div>
+        
+      </div>
+    </section>
+
+    <section class="customer-reviews">
+      <h2 id="cus-heading">what our customer say</h2>
+      <div class="review-container">
+
+        <div class="review-card">
+          <div class="stars">★★★★☆</div>
+          <p>"Absolutely stunning. Got so many compliments."</p>
+          <span>-Arjun M.</span>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Perfect fit and great fabric would buy again"</p>
+          <span>-Steve G.</span>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Great quality fast delivery, love the brand"</p>
+          <span>-Priya M.</span>
+        </div>
+        
+      </div>
+    </section>
+    <section id="subscribe">
+      <div class="sub-container">
+        <h2 id="subscribe-heading">Subscribe</h2>
+        <p id="subscribe-para">Stay updated with our latest collections and offers!</p>
+        <div class="sub-field">
+          <input id="subscribe-input" type="email" placeholder="Enter your email address">
+          <button class="subscribe-btn" type="submit">Subscribe</button>
+        </div>
+      </div>
+    </section>
+{% endblock %}
