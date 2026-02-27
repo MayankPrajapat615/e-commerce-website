@@ -1362,7 +1362,7 @@ footer {
 }
 
 
-/* =========================about-us-page-starts-from-here======= */
+/* =========================product-page-starts-from-here======= */
 .about-intro{
   width: auto;
   height: fit-content;
@@ -1397,7 +1397,8 @@ footer {
   max-width: 400px;        /* give card a fixed width */
   background-color: var(--bg);
   overflow: hidden;    /* clip image at card level too */
-  /* border-bottom: 1px solid var(--accent); */
+  border: 1px solid rgba(28, 28, 28, 0.129);
+  border-radius: 2px;
 }
 
 .image-div {
@@ -1422,25 +1423,25 @@ footer {
 .card-image:hover{
   transform: scale(1.05);
 }
-.product-name {
-  font-style: normal;
-  font-weight: 300;
-  font-size: 1.2rem;
-  white-space: nowrap;      /* prevents long names from wrapping awkwardly */
+.card .product-name {
+  font-weight: bold;
+  font-size: 16px;
+  color: #222;
+  margin: 0 0 0.5rem 0;
+  padding-top: 10px;
+  padding-left: 10px;
   overflow: hidden;
-  text-overflow: ellipsis;  /* adds ... if name is too long */
-  font-size: 18px;
-  margin: 4px 0 8px 0;
-}
-.product-price {
-  font-size: 0.9rem;
-  font-weight: 300;
-  color: var(--primary);
-  padding-top: 4px;
 }
 
+.card .product-price {
+  font-size: 1rem;
+  font-weight:400;
+  color: #0f766e; /* or your primary */
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
 
-/* <===========================Product-page==========================> */
+/* <===========================Product-detail-page-starts-here==========================> */
 .product-page {
   background-color: var(--bg);          /* CHANGED: accent bg was too loud for a product page */
   width: 100%;                          /* CHANGED: auto → 100% for proper full width */

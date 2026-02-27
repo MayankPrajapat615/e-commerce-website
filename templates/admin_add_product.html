@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Product</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
 
 <h2>Add Product</h2>
+<a href="/logout" style="float:right;">Logout</a>
 
-<form method="POST" action="/admin/add-product" id="productForm">
+<form id="productForm" method="POST" enctype="multipart/form-data">
 
     <label>Product Name</label>
     <input type="text" name="name" required>
@@ -22,19 +20,20 @@
     <input type="number" name="stock" required>
 
     <label>Image URL 1</label>
-    <input type="text" name="images">
+    <input type="file" name="images" multiple required>
 
     <label>Image URL 2</label>
-    <input type="text" name="images">
+    <input type="file" name="images" multiple required>
 
     <label>Image URL 3</label>
-    <input type="text" name="images">
+    <input type="file" name="images" multiple required>
 
     <button type="submit">Add Product</button>
 
 </form>
 
-<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
 
-</body>
-</html>
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
