@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}"/>
+{% endblock %}
+
 {% block content %}
     <section class="page">
         <div class="inside-page">

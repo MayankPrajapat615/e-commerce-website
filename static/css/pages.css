@@ -1,0 +1,330 @@
+/* <=========================ABOUT-US PAGE===================> */
+.page{
+  padding: 4rem 0;
+}
+.inside-page{
+  padding: 0 4rem;
+  width: auto;
+  height: auto;
+}
+.story-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.story-text {
+  flex: 1;
+  padding: 1rem;
+}
+
+.story-text h2 {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--accent);
+  text-align: left;
+  font-weight: 600;
+  font-size: 3rem;
+  width:fit-content;
+}
+.story-text p{
+  font-size: 1.5rem;
+  font-weight: 300;
+
+}
+
+.story-image {
+  flex: 1;           /* matches story-text so both take e qual space */
+  max-width: 500px;  /* prevents it from getting too wide on large screens */
+}
+.story-image img {
+  width: 100%;       /* fills the flex container */
+  height: 100%;
+  object-fit: cover; /* keeps aspect ratio clean */
+  display: block;
+  border-radius: 8px;
+  transition: 0.2s ease;
+}
+.story-image img:hover{
+  transform: scale(1.05);
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 768px) {
+  .page{
+    padding: 2rem 0;
+  }
+  .inside-page{
+    padding: 0 1rem;;
+  }
+  .story-container {
+    flex-direction: column;
+  }
+
+  .story-image {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .story-text h2 {
+    font-size: 1.8rem;
+  }
+}
+.story-para p{
+  padding: 2rem;
+  font-size: 1.1rem;       /* text is unstyled — no font size set */
+  font-weight: 300;        /* to match your story-container p style */
+  line-height: 2;        /* text feels cramped without this */
+  color: var(--text);      /* inherits nothing if not set */
+  max-width: 800px;        /* long text spans full width — hard to read */
+  margin: 0 auto;          /* centers it if you use max-width */
+  text-align: center;      /* or left, depending on your layout */
+}
+.stats-container{
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  gap: 4rem;
+  margin-top: 2rem;
+}
+.stats-item{
+  width: 200px;
+  height: 200px;
+  border: 2px solid var(--accent);
+  text-align: center;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5%;
+  transition: 0.2s ease;
+}
+.stats-item:hover{
+  transform: scale(1.05);
+}
+
+.stats-number{
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.stats-labels{
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+@media (max-width: 768px) {
+  .stats-container{
+    flex-direction: column;
+  }
+}
+.value-heading{
+  font-size: 2rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  text-transform: capitalize;
+  width: fit-content;
+  margin: 0 auto;
+}
+.value-grid{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  flex: 1;
+}
+.value-card {
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+  width: 300px;
+}
+
+.value-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.value-card-icon {
+  font-size: 2.2rem;
+  display: inline-block;
+  padding: 1rem;
+  border-radius: 50%;
+  background: rgba(var(--accent-rgb), 0.1); /* soft accent circle behind icon */
+  line-height: 1;
+}
+
+.value-card-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.value-card-text {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-muted, #666);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* <================about-us-page-starts-from-here==================> */
+.aboutus-container{
+  width: auto;
+  height: auto;
+  padding: 1rem 1rem;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+}
+.aboutus-title{
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0;
+  text-transform: capitalize;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--accent);
+  text-align: center;
+}
+.aboutus-text{
+  text-align: center;
+  padding: 1rem 1rem;
+}
+.contact-container {
+  display: flex;
+  align-items: flex-start;        /* align cards from top not center */
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;                      /* space between the two cards */
+  padding: 3rem;                  /* breathing room around both cards */
+}
+
+.contact-card {
+  border: 1px solid var(--primary);
+  padding: 2rem;                  /* more inner space, was too tight */
+  border-radius: 8px;             /* subtle radius, 5% looks odd on rectangles */
+  width: 400px;                   /* fixed width so card doesnt stretch */
+}
+
+.contact-card-heading {
+  text-transform: uppercase;      /* all caps looks cleaner for headings */
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: 1.5rem;          /* space between heading and first label */
+  font-size: 1rem;
+  letter-spacing: 1.5px;          /* spaced letters look more refined */
+}
+
+.contact-card label {
+  display: block;                 /* label on its own line without using br */
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;      /* small uppercase labels look professional */
+  color: var(--accent);           /* accent color makes labels pop */
+}
+
+.contact-card input,
+.contact-card textarea {
+  width: 100%;                    /* full width of the card */
+  padding: 0.7rem 1rem;           /* comfortable click area */
+  margin-bottom: 1.2rem;          /* space between each field */
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  background: transparent;        /* matches your site background */
+  font-size: 0.95rem;
+  outline: none;
+  font-family: inherit;           /* uses your site font not browser default */
+}
+
+.contact-card input:focus,
+.contact-card textarea:focus {
+  border-color: var(--accent);    /* highlight field when user clicks it */
+}
+
+.contact-card textarea {
+  height: 120px;                  /* fixed height so it doesnt look tiny */
+  resize: none;                   /* prevents user from breaking your layout */
+}
+
+.contact-card button {
+  width: 100%;                    /* full width button looks more intentional */
+  padding: 0.8rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;      /* matches label style, looks consistent */
+  cursor: pointer;
+  transition: background 0.3s;    /* smooth color change on hover */
+}
+
+.contact-card button:hover {
+  background: var(--accent);      /* hover feedback so it feels clickable */
+}
+.contact-info-card {
+  border: 1px solid var(--primary);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;                         /* same width as form card */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;                          /* space between each item */
+}
+
+.contact-info-card__heading {
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--accent);  /* matches form card heading */
+}
+
+.contact-info-card__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;                            /* space between icon and text */
+}
+
+.contact-info-card__icon {
+  font-size: 1.4rem;
+  width: 40px;
+  height: 40px;
+  background: var(--primary);          /* colored circle behind icon */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;                       /* icon never shrinks */
+}
+
+.contact-info-card__label {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);                 /* matches label style from form */
+  margin-bottom: 0.2rem;
+}
+
+.contact-info-card__value {
+  font-size: 0.95rem;
+  font-weight: 400;
+}

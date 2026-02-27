@@ -1,0 +1,125 @@
+/* =========================product-page-starts-from-here======= */
+.shop-section{
+  padding: 2rem 1rem;
+}
+.about-intro{
+  width: auto;
+  height: fit-content;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  flex-direction: column;
+}
+.about-heading{
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-bottom: 0;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid var(--accent);
+}
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* 4 cards default */
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* 3 cards at 90% zoom / smaller screens */
+@media (max-width: 1200px) {
+  .card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2 cards on tablet */
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 1 card on mobile */
+@media (max-width: 480px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  width: 100%;             /* CHANGED: was max-width: 400px, now fills grid column */
+  height: auto;
+  background-color: var(--bg);
+  overflow: hidden;
+  border: 1px solid rgba(28, 28, 28, 0.129);
+  border-radius: 8px;      /* CHANGED: 2px was too sharp */
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);   /* ADDED: lift on hover */
+}
+
+.image-div {
+  width: 100%;
+  aspect-ratio: 3 / 4;     /* CHANGED: portrait ratio, taller than wide */
+  overflow: hidden;
+  position: relative;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* keeps it filling the portrait box */
+  object-position: top;     /* ADDED: focuses on top of image (face/upper body) */
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.card-image:hover {
+  transform: scale(1.05);
+}
+
+.wishlist-icon {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  cursor: pointer;
+  background: white;        /* ADDED: icon visibility on dark images */
+  border-radius: 50%;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+.wishlist-icon:hover {
+  transform: scale(1.2);   /* ADDED */
+}
+
+.card .product-name {
+  font-weight: 600;         /* CHANGED: bold → 600 */
+  font-size: 0.95rem;       /* CHANGED: 16px → relative unit */
+  color: #222;
+  margin: 0;
+  padding: 10px 10px 4px 10px;   /* CHANGED: consolidated padding */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;  /* ADDED: long names get ... */
+}
+
+.card .product-price {
+  font-size: 0.95rem;
+  font-weight: 600;         /* CHANGED: 400 too light for price */
+  color: #0f766e;
+  padding: 0 10px 12px 10px;     /* CHANGED: consolidated padding */
+}
+
+.product-link {
+  text-decoration: none;    /* ADDED: removes underline from anchor */
+  color: inherit;           /* ADDED: inherits text color */
+  display: block;           /* ADDED: makes full card clickable */
+}

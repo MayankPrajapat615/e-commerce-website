@@ -1,0 +1,179 @@
+/* static/
+├── css/
+│   ├── base.css        ← global styles, navbar, footer, variables
+│   ├── home.css        ← home page only
+│   ├── shop.css        ← shop page only
+│   ├── product.css     ← product detail page only
+│   ├── pages.css       ← about, contact, sustainability
+│   └── admin.css       ← all admin pages (login + add product) */
+
+:root {
+  --bg: #f5f5dc; /* Beige for traditional light mode */
+  --text: #333;
+  --accent: #d4af37; /* Gold accent */
+  --primary: #006400; /* Deep green for buttons/links */
+  --border: #d3d3d3;
+  --card-bg: #fff;
+  --shadow: 0 6px 24px rgba(0,0,0,0.06);
+  --font-main: 'Inter', sans-serif;
+  --font-display: 'Montserrat', sans-serif;
+  --transition: 0.3s ease;
+}
+*{
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  scroll-behavior: smooth;
+  overflow-x: hidden;    /* hides any horizontal overflow */
+  width: 100%;
+}
+.dark-mode {
+  --bg: #1c1c1c; /* Dark for night mode */
+  --text: #f5f5dc;
+  --accent: #b8860b;
+  --primary: #90ee90;
+  --border: #444;
+  --card-bg: #333;
+  --shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  gap: 2rem;
+}
+.brand {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--primary);
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+.nav-links li {
+  position: relative;
+}
+.nav-links a, .nav-links button {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color var(--transition);
+}
+.nav-links a.active, .nav-links a:focus, .nav-links a:hover,
+.nav-links button:focus, .nav-links button:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 2.5rem;
+  left: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  min-width: 150px;
+  z-index: 10;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+.nav-links li:hover .dropdown {
+  display: flex;
+}
+.dropdown li {
+  margin: 0;
+  width: 100%;
+}
+.dropdown a {
+  padding: 0.5rem 1rem;
+  display: block;
+}
+.nav-toggle {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--text);
+}
+@media (max-width: 900px) {
+  .nav-links {
+    position: absolute;
+    top: 4.5rem;
+    right: 2rem;
+    background: var(--bg);
+    box-shadow: var(--shadow);
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    display: none;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-toggle {
+    display: block;
+  }
+}
+
+/* -----------================footer=================--------------------- */
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.social-links img {
+  width: 1.6rem;
+  filter: grayscale(1) brightness(0.7);
+  transition: filter 0.2s;
+}
+
+.social-links a:hover img {
+  filter: none;
+}

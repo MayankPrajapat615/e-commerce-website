@@ -1,0 +1,244 @@
+/* ===== HERO ===== */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  gap: 2rem;
+}
+.hero-content {
+  flex: 1;
+  height: auto;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--primary);
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.hero-img {
+  flex: 1;
+  max-width: 50%;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition);
+}
+.hero-img:hover {
+  transform: scale(1.05);
+}
+.btn-primary{
+  padding: 8px 16px;
+  background-color: var(--accent);
+  color: var(--text);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+.btn-primary:hover {
+  background-color: var(--primary);
+  color: var(--bg);
+} 
+@media (max-width: 700px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-img {
+    max-width: 100%;
+  }
+}
+
+/* ===== SECOND SECTION ===== */
+#sec-page {
+  width: auto;
+  height: auto;
+  padding: 1rem 1rem;
+}
+
+#intro-text {
+  text-align: center;
+  padding: 1rem 1rem;
+}
+
+#sec-heading {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0;
+  text-transform: capitalize;
+}
+
+#sec-sub-heading {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-top: 0.7rem;
+  margin-bottom: 2rem;
+}
+
+.sec-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.movement-card {
+  height: 400px;
+  width: 300px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+  transition: 0.2s ease;
+}
+
+.sec-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-text {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: 10%;
+  text-align: center;
+  color: var(--bg);
+}
+
+#image-text-heading {
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  text-transform: capitalize;
+}
+
+.image-text-anchor {
+  font-size: 0.8rem;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+/* ===== CUSTOMER REVIEWS ===== */
+.customer-reviews {
+  width: auto;
+  height: auto;
+  padding: 1rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#cus-heading {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0;
+  text-transform: capitalize;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: 1.5rem;
+  width: auto;
+  text-align: center;
+}
+
+.review-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.review-card {
+  width: 300px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.review-card:hover {
+  border: 1px solid var(--primary);
+}
+
+/* ===== SUBSCRIBE ===== */
+.sub-container {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+#subscribe-heading {
+  text-transform: capitalize;
+  font-size: 1.7rem;
+  font-weight: 400;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: 0;
+}
+
+#subscribe-para {
+  margin-top: 0.7rem;
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.sub-field {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1.2rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .sub-field {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+#subscribe-input {
+  outline: none;
+  border: none;
+  height: auto;
+  font-size: 0.9rem;
+  width: 250px;
+  padding: 8px 12px;
+}
+
+#subscribe-input:hover {
+  box-shadow: var(--shadow);
+}
+
+.subscribe-btn {
+  border: none;
+  padding: 8px 12px;
+  background-color: var(--accent);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.subscribe-btn:hover {
+  background-color: var(--primary);
+  color: var(--bg);
+}

@@ -1,0 +1,260 @@
+/* <===========================Product-detail-page-starts-here==========================> */
+.product-page {
+  background-color: var(--bg);          /* CHANGED: accent bg was too loud for a product page */
+  width: 100%;                          /* CHANGED: auto → 100% for proper full width */
+  display: flex;
+  padding: 3rem 0rem;                   /* CHANGED: more breathing room */
+  justify-content: center;
+  align-items: flex-start;             /* ADDED: aligns both sides to top */
+  gap: 3rem;                            /* ADDED: space between image and info */
+  max-width: 1200px;                    /* ADDED: prevents stretching on large screens */
+  margin: 0 auto;
+  box-sizing: border-box;              /* ADDED: padding doesn't cause overflow */
+}
+
+.product-image {
+  flex: 1;
+  height: 600px;
+  overflow: hidden;
+  border-radius: 12px;                 /* ADDED: rounded corners */
+  /* box-shadow: 0 4px 20px rgba(0,0,0,0.1); ADDED: depth */
+}
+
+.product-image img {
+  width: 100%;                         /* CHANGED: auto → 100% to fill container */
+  height: 100%;                        /* CHANGED: fixed height → 100% to fill container */
+  object-fit: contain;                   /* CHANGED: contain → cover, fills cleanly */
+  display: block;                      /* ADDED: removes inline gap */
+  padding: 0;                          /* CHANGED: removed padding, use container spacing instead */
+  transition: transform 0.4s ease;    /* ADDED: smooth zoom on hover */
+}
+
+.product-image img:hover {
+  transform: scale(1.03);             /* ADDED: subtle zoom on hover */
+}
+
+/* ADDED: entire product-info section was unstyled */
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-top: 1rem;
+}
+
+.product-info h3 {
+  font-size: 2rem;                     /* ADDED */
+  font-weight: 700;                    /* ADDED */
+  letter-spacing: 0.5px;              /* ADDED */
+  margin: 0;                           /* ADDED */
+}
+
+.product-info p {
+  font-size: 1rem;                     /* ADDED */
+  font-weight: 300;                    /* ADDED */
+  line-height: 1.7;                    /* ADDED */
+  color: var(--text-muted, #666);     /* ADDED */
+  margin: 0;                           /* ADDED */
+}
+
+/* ADDED: rating was a raw div with no styling */
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #f5a623;                      /* ADDED: gold stars */
+}
+
+.product-rating span {
+  color: var(--text-muted, #888);     /* ADDED: review count muted */
+  font-size: 0.9rem;
+}
+
+.size-container{
+  width: fit-content;
+  height: auto;
+  margin: 0;
+}
+.size-text {
+  padding: 0 0 0.7rem 0;
+  font-weight: 500;   /* FIXED: font: 500 → font-weight: 500 */
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.size-title {
+  height: auto;
+  width: fit-content;
+  padding: 4px 8px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  cursor: pointer;                     /* ADDED */
+  transition: background 0.2s ease;   /* ADDED */
+}
+
+.size-title:hover {
+  background-color: var(--primary);   /* ADDED: visual feedback on hover */
+  color: var(--bg);
+}
+
+/* ADDED: price was a plain <p> with no distinction */
+.product-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0;
+}
+
+/* ADDED: action buttons missing entirely */
+.product-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.price-original {
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-left: 1rem;
+}
+
+.btn-add-cart {
+  flex: 1;
+  padding: 0.9rem;
+  background-color: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-add-cart:hover {
+  opacity: 0.85;                       /* ADDED */
+  background-color: var(--primary);
+}
+
+.btn-wishlist {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease; /* ADDED */
+}
+
+/* ADDED: responsive stacking on mobile */
+@media (max-width: 768px) {
+  .product-page {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .product-image {
+    height: 400px;
+  }
+}
+
+.btn-buy-now {
+  flex: 1;
+  padding: 0.9rem;
+  background-color: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-buy-now:hover {
+  opacity: 0.85;                       /* ADDED */
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--primary);
+}
+.product-features {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border: 1px solid var(--primary); */
+  padding: 2rem 2rem;
+  border-radius: 8px;
+  gap: 1rem;
+}
+.feat-card{
+  display: flex;
+  gap: 1rem;
+}
+.feat-text{
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-muted, #666);
+}
+
+.accordion-container {
+  width: 100%;
+  margin-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.accordion-header:hover {
+  color: var(--accent);
+}
+
+.accordion-icon {
+  font-size: 1.4rem;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+  line-height: 1;
+}
+
+/* rotates + into x when open */
+.accordion-item.open .accordion-icon {
+  transform: rotate(45deg);
+}
+
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.3s ease;
+}
+
+.accordion-body p {
+  padding-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-muted, #666);
+  margin: 0;
+}
+
+/* when open, reveal content */
+.accordion-item.open .accordion-body {
+  max-height: 300px;
+}
