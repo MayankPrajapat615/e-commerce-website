@@ -1,70 +1,89 @@
-/* =========================product-page-starts-from-here======= */
-.shop-section{
-  padding: 2rem 1rem;
+/* ========================= SHOP PAGE ======= */
+.shop-section {
+  padding: 2rem 0;          /* CHANGED: removed side padding, grid handles it */
+  width: 100%;
+  box-sizing: border-box;
 }
-.about-intro{
-  width: auto;
-  height: fit-content;
+
+.about-intro {
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   flex-direction: column;
+  margin-bottom: 2rem;
 }
-.about-heading{
+
+.about-heading {
   font-size: 1.5em;
   font-weight: 600;
   margin-bottom: 0;
   padding-bottom: 0.7rem;
   border-bottom: 2px solid var(--accent);
 }
+
+/* GRID */
 .card-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);   /* 4 cards default */
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  padding: 2rem;
+  padding: 0 2rem;          /* CHANGED: only horizontal padding */
+  width: 100%;
+  box-sizing: border-box;   /* CRITICAL: padding doesn't cause overflow */
 }
 
-/* 3 cards at 90% zoom / smaller screens */
 @media (max-width: 1200px) {
   .card-container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* 2 cards on tablet */
 @media (max-width: 768px) {
   .card-container {
     grid-template-columns: repeat(2, 1fr);
+    padding: 0 1rem;
   }
 }
 
-/* 1 card on mobile */
 @media (max-width: 480px) {
   .card-container {
     grid-template-columns: 1fr;
   }
 }
 
+/* ANCHOR WRAPPING CARD */
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;           /* CRITICAL */
+  width: 100%;              /* CRITICAL: fills grid column */
+  box-sizing: border-box;
+}
+
+/* CARD */
 .card {
-  width: 100%;             /* CHANGED: was max-width: 400px, now fills grid column */
-  height: auto;
+  width: 100%;
   background-color: var(--bg);
   overflow: hidden;
   border: 1px solid rgba(28, 28, 28, 0.129);
-  border-radius: 8px;      /* CHANGED: 2px was too sharp */
+  border-radius: 8px;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .card:hover {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);   /* ADDED: lift on hover */
+  transform: translateY(-4px);
 }
 
+/* IMAGE */
 .image-div {
   width: 100%;
-  aspect-ratio: 3 / 4;     /* CHANGED: portrait ratio, taller than wide */
+  height: 380px;
+  flex-shrink: 0;           /* CRITICAL: image never shrinks */
   overflow: hidden;
   position: relative;
 }
@@ -72,8 +91,8 @@
 .card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;        /* keeps it filling the portrait box */
-  object-position: top;     /* ADDED: focuses on top of image (face/upper body) */
+  object-fit: cover;
+  object-position: top;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -82,44 +101,28 @@
   transform: scale(1.05);
 }
 
+/* WISHLIST */
 .wishlist-icon {
   position: absolute;
   right: 8px;
   top: 8px;
   cursor: pointer;
-  background: white;        /* ADDED: icon visibility on dark images */
+  background: white;
   border-radius: 50%;
   padding: 5px;
   width: 30px;
   height: 30px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
 }
 
 .wishlist-icon:hover {
-  transform: scale(1.2);   /* ADDED */
+  transform: scale(1.2);
 }
 
+/* TEXT */
 .card .product-name {
-  font-weight: 600;         /* CHANGED: bold → 600 */
-  font-size: 0.95rem;       /* CHANGED: 16px → relative unit */
-  color: #222;
-  margin: 0;
-  padding: 10px 10px 4px 10px;   /* CHANGED: consolidated padding */
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;  /* ADDED: long names get ... */
-}
-
-.card .product-price {
-  font-size: 0.95rem;
-  font-weight: 600;         /* CHANGED: 400 too light for price */
-  color: #0f766e;
-  padding: 0 10px 12px 10px;     /* CHANGED: consolidated padding */
-}
-
-.product-link {
-  text-decoration: none;    /* ADDED: removes underline from anchor */
-  color: inherit;           /* ADDED: inherits text color */
-  display: block;           /* ADDED: makes full card clickable */
+  all: unset;
+  display: block;
+  font-weight: 600;
 }

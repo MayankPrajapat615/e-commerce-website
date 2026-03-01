@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<section class="cart-section">
+  <div class="cart-wrapper">
+
+    <h2 class="cart-heading">Your Cart</h2>
+
+    {% if cart %}
+
+      <div class="cart-layout">
+
+        <!-- CART ITEMS -->
+        <div class="cart-items">
+          {% for item in cart %}
+          <div class="cart-item" id="cart-item-{{ item.product_id }}">
+
+            <img src="{{ item.image }}" alt="{{ item.product_name }}" class="cart-item-image">
+
+            <div class="cart-item-details">
+              <p class="cart-item-name">{{ item.product_name }}</p>
+              <p class="cart-item-price">₹ {{ item.price | int }}</p>
+
+              <div class="cart-item-controls">
+                <button class="qty-btn" onclick="updateQty('{{ item.product_id }}', {{ item.quantity - 1 }})">−</button>
+                <span class="qty-display" id="qty-{{ item.product_id }}">{{ item.quantity }}</span>
+                <button class="qty-btn" onclick="updateQty('{{ item.product_id }}', {{ item.quantity + 1 }})">+</button>
+              </div>
+            </div>
+
+            <div class="cart-item-right">
+              <p class="cart-item-subtotal">₹ {{ (item.price * item.quantity) | int }}</p>
+              <button class="cart-remove-btn" onclick="removeItem('{{ item.product_id }}')">🗑</button>
+            </div>
+
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- ORDER SUMMARY -->
+        <div class="cart-summary">
+          <h3 class="summary-heading">Order Summary</h3>
+
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cart-total">₹ {{ total | int }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>{% if total >= 999 %}FREE{% else %}₹ 99{% endif %}</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Total</span>
+            <span>₹ {% if total >= 999 %}{{ total | int }}{% else %}{{ (total + 99) | int }}{% endif %}</span>
+          </div>
+
+          <a href="/checkout" class="btn-checkout">Proceed to Checkout</a>
+          <a href="/shop" class="btn-continue">Continue Shopping</a>
+        </div>
+
+      </div>
+
+    {% else %}
+
+      <!-- EMPTY CART -->
+      <div class="cart-empty">
+        <p class="cart-empty-icon">🛒</p>
+        <h3>Your cart is empty</h3>
+        <p>Looks like you haven't added anything yet.</p>
+        <a href="/shop" class="btn-checkout">Shop Now</a>
+      </div>
+
+    {% endif %}
+
+  </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+{% endblock %}

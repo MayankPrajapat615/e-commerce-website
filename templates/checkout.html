@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<section class="checkout-section">
+  <div class="checkout-wrapper">
+
+    <h2 class="checkout-heading">Checkout</h2>
+
+    <div class="checkout-layout">
+
+      <!-- DELIVERY FORM -->
+      <div class="checkout-form-wrapper">
+        <h3 class="section-title">Delivery Details</h3>
+
+        <form action="/place-order" method="POST" id="checkoutForm">
+
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input class="form-input" type="text" name="full_name" value="{{ user.name }}" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input class="form-input" type="tel" name="phone" placeholder="10-digit mobile number" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <textarea class="form-input form-textarea" name="address" rows="3" placeholder="House no, Street, Area" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input class="form-input" type="text" name="city" placeholder="Mumbai" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">State</label>
+              <input class="form-input" type="text" name="state" placeholder="Maharashtra" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Pincode</label>
+            <input class="form-input" type="text" name="pincode" placeholder="400001" maxlength="6" required>
+          </div>
+
+          <!-- PAYMENT — fake COD only -->
+          <div class="payment-section">
+            <h3 class="section-title">Payment Method</h3>
+            <div class="payment-option selected">
+              <span>💵</span> Cash on Delivery
+            </div>
+            <p class="payment-note">More payment options coming soon.</p>
+          </div>
+
+          <button class="btn-place-order" type="submit">Place Order</button>
+
+        </form>
+      </div>
+
+      <!-- ORDER SUMMARY -->
+      <div class="checkout-summary">
+        <h3 class="section-title">Order Summary</h3>
+
+        <div class="checkout-items">
+          {% for item in cart %}
+          <div class="checkout-item">
+            <img src="{{ item.image }}" alt="{{ item.product_name }}" class="checkout-item-image">
+            <div class="checkout-item-info">
+              <p class="checkout-item-name">{{ item.product_name }}</p>
+              <p class="checkout-item-qty">Qty: {{ item.quantity }}</p>
+            </div>
+            <p class="checkout-item-price">₹ {{ (item.price * item.quantity) | int }}</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="checkout-totals">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>₹ {{ total | int }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>{% if total >= 999 %}FREE{% else %}₹ 99{% endif %}</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Grand Total</span>
+            <span>₹ {% if total >= 999 %}{{ total | int }}{% else %}{{ (total + 99) | int }}{% endif %}</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

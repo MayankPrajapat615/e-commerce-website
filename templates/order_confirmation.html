@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<section class="confirmation-section">
+  <div class="confirmation-wrapper">
+
+    <div class="confirmation-icon">✅</div>
+    <h2 class="confirmation-title">Order Placed Successfully!</h2>
+    <p class="confirmation-subtitle">Thank you, {{ order.user_name }}. Your order has been confirmed.</p>
+
+    <div class="confirmation-order-id">
+      Order ID: <strong>{{ order.order_id }}</strong>
+    </div>
+
+    <!-- DELIVERY INFO -->
+    <div class="confirmation-card">
+      <h3 class="section-title">Delivering To</h3>
+      <p><strong>{{ order.delivery.full_name }}</strong></p>
+      <p>{{ order.delivery.address }}</p>
+      <p>{{ order.delivery.city }}, {{ order.delivery.state }} — {{ order.delivery.pincode }}</p>
+      <p>📞 {{ order.delivery.phone }}</p>
+    </div>
+
+    <!-- ORDER ITEMS -->
+    <div class="confirmation-card">
+      <h3 class="section-title">Items Ordered</h3>
+      {% for item in order.order_items %}
+      <div class="checkout-item">
+        <img src="{{ item.image }}" alt="{{ item.product_name }}" class="checkout-item-image">
+        <div class="checkout-item-info">
+          <p class="checkout-item-name">{{ item.product_name }}</p>
+          <p class="checkout-item-qty">Qty: {{ item.quantity }}</p>
+        </div>
+        <p class="checkout-item-price">₹ {{ (item.price * item.quantity) | int }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- TOTALS -->
+    <div class="confirmation-card">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>₹ {{ order.subtotal | int }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>{% if order.shipping_charge == 0 %}FREE{% else %}₹ {{ order.shipping_charge }}{% endif %}</span>
+      </div>
+      <div class="summary-row total-row">
+        <span>Grand Total</span>
+        <span>₹ {{ order.grand_total | int }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Payment</span>
+        <span>{{ order.payment_method }}</span>
+      </div>
+    </div>
+
+    <div class="confirmation-actions">
+      <a href="/my-orders" class="btn-checkout">View My Orders</a>
+      <a href="/shop" class="btn-continue">Continue Shopping</a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

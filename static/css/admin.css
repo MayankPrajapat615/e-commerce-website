@@ -60,24 +60,6 @@ button:hover {
     background: #333;
 }
 
-.flash-message {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.flash-message.flash-success {
-    background: #e6ffed;
-    color: #2e7d32;
-}
-
-.flash-message.flash-error {
-    background: #ffe6e6;
-    color: #c62828;
-}
-
-
 /*------------admin-add-product-page-styling---------------*/
 .admin-container {
   max-width: 700px;
@@ -177,11 +159,12 @@ button:hover {
 /* image upload boxes */
 .file-upload-grid {
   display: flex;
+  flex-wrap: wrap;    /* ADDED: wraps when more boxes are added */
   gap: 1rem;
 }
 
 .file-upload-box {
-  flex: 1;
+  flex: 0 0 120px;    /* CHANGED: fixed width, doesn't stretch */
   height: 120px;
   border: 2px dashed var(--border);
   border-radius: 10px;
@@ -192,6 +175,8 @@ button:hover {
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease;
   gap: 0.4rem;
+  position: relative;  /* ADDED: for cross icon positioning */
+  overflow: hidden;    /* ADDED: for image preview */
 }
 
 .file-upload-box:hover {
@@ -209,6 +194,59 @@ button:hover {
 .file-upload-text {
   font-size: 0.8rem;
   color: var(--text-muted, #aaa);
+}
+
+/* add more box — dashed green accent */
+.add-more-box {
+  border-color: var(--accent);
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.add-more-box:hover {
+  opacity: 1;
+  background: rgba(var(--accent-rgb), 0.06);
+}
+
+/* green tick overlay when image is selected */
+.file-upload-box.filled {
+  border-color: var(--accent);
+  border-style: solid;
+  background: rgba(var(--accent-rgb), 0.05);
+}
+
+.file-upload-box.filled .file-upload-icon {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.file-upload-box.filled .file-upload-text {
+  color: var(--accent);
+  font-size: 0.75rem;
+}
+/* // cross icon for removing selected image */
+.remove-box-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+  line-height: 1;
+}
+
+.remove-box-btn:hover {
+  background: rgba(220, 0, 0, 0.85);  /* red on hover */
 }
 
 .admin-submit-btn {

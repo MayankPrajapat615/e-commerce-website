@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<section class="orders-section">
+  <div class="orders-wrapper">
+
+    <h2 class="checkout-heading">My Orders</h2>
+
+    {% if orders %}
+      {% for order in orders %}
+      <div class="order-card">
+
+        <div class="order-card-header">
+          <div>
+            <p class="order-id">{{ order.order_id }}</p>
+            <p class="order-date">{{ order.created_at.strftime("%d %b %Y, %I:%M %p") }}</p>
+          </div>
+          <span class="order-status status-{{ order.status }}">{{ order.status | capitalize }}</span>
+        </div>
+
+        <div class="order-card-items">
+          {% for item in order.order_items %}
+          <div class="order-item">
+            <img src="{{ item.image }}" alt="{{ item.product_name }}" class="order-item-image">
+            <div>
+              <p class="order-item-name">{{ item.product_name }}</p>
+              <p class="order-item-qty">Qty: {{ item.quantity }} × ₹ {{ item.price | int }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="order-card-footer">
+          <span>Grand Total: <strong>₹ {{ order.grand_total | int }}</strong></span>
+          <span>{{ order.payment_method }}</span>
+        </div>
+
+      </div>
+      {% endfor %}
+
+    {% else %}
+      <div class="cart-empty">
+        <p class="cart-empty-icon">📦</p>
+        <h3>No orders yet</h3>
+        <p>You haven't placed any orders.</p>
+        <a href="/shop" class="btn-checkout">Shop Now</a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

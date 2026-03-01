@@ -6,64 +6,237 @@
   <title>STAY TRADITIONAL - Traditional Men's Kurtas</title>
   <meta name="description" content="STAY TRADITIONAL: Premium, sustainable men's kurtas blending tradition with modern style.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
   {% block styles %}{% endblock %}
 </head>
 <body>
+
   <header>
     <nav class="navbar">
-      <div class="brand">STAY TRADITIONAL</div>
-      <button class="nav-toggle" aria-label="Open Menu">&#9776;</button>
-      <ul class="nav-links">
-        <li><a href="/" class="active">Home</a></li>
+      <!-- Brand -->
+      <a href="/" class="brand">
+        <span class="brand-stay">STAY</span>
+        <span class="brand-trad">TRADITIONAL</span>
+      </a>
+
+      <!-- Center: Nav Links (desktop) -->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/shop" class="nav-link">Shop</a></li>
+        <li><a href="/about-us" class="nav-link">About</a></li>
+        <li><a href="/sustainability" class="nav-link">Sustainability</a></li>
+        <li><a href="/contact-us" class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Right: Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark/light mode">
+          <span id="icon-moon">&#9790;</span>
+          <span id="icon-sun" style="display:none;">&#9728;</span>
+        </button>
+
+        <button class="icon-btn cart-btn" onclick="window.location.href='/cart'" aria-label="Shopping Cart">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-badge" id="cart-count">0</span>
+        </button>
+
+        {% if session.get("user_name") %}
+          <div class="user-menu">
+            <button class="user-menu-btn icon-btn" aria-label="User Menu">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span class="user-name-label">{{ session["user_name"].split()[0] }}</span>
+            </button>
+            <div class="user-dropdown">
+              <a href="/my-orders">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+                My Orders
+              </a>
+              <a href="/user-logout" class="logout-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Logout
+              </a>
+            </div>
+          </div>
+        {% else %}
+          <button id="login-btn" class="icon-btn" aria-label="Login">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+        {% endif %}
+
+        <!-- Burger (mobile only) -->
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <span class="brand-stay">STAY</span><span class="brand-trad">TRADITIONAL</span>
+        </div>
+        <button class="drawer-close" id="drawer-close">&times;</button>
+      </div>
+      <ul class="drawer-links">
+        <li><a href="/">Home</a></li>
         <li><a href="/shop">Shop</a></li>
-        <li><a href="/about-us">About Us</a></li>
+        <li><a href="/about-us">About</a></li>
         <li><a href="/sustainability">Sustainability</a></li>
         <li><a href="/contact-us">Contact</a></li>
-        <li>
-          <button id="theme-toggle" aria-label="Toggle dark/light mode">
-            <span id="icon-moon">&#9790;</span>
-            <span id="icon-sun" style="display: none;">&#9728;</span>
-          </button>
-        </li>
-        <li>
-          <button id="cart-btn" aria-label="Shopping Cart">
-            <span>🛒</span><span id="cart-count">0</span>
-          </button>
-        </li>
-        <li>
-          <button id="login-btn" aria-label="User Profile">
-            <img src="/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="">
-          </button>
-        </li>
+        {% if session.get("user_name") %}
+          <li class="drawer-divider"></li>
+          <li><a href="/my-orders">My Orders</a></li>
+          <li><a href="/user-logout">Logout</a></li>
+        {% endif %}
       </ul>
-    </nav>
+      <div class="drawer-footer">
+        <div class="drawer-social">
+          <a href="#" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <main>
-        <!-- this block isfor the flash messages that are displayed acrossthe pages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="flash-message flash-{{ category }}">{{ message }}</div>
-            {% endfor %}
-          {% endif %} 
-        {% endwith %}
+  <!-- AUTH MODAL -->
+  <div class="auth-modal" id="auth-modal">
+    <div class="auth-modal-content">
+      <button class="auth-modal-close" id="auth-modal-close">&times;</button>
+      <div class="modal-brand">Stay Traditional</div>
 
-        {% block content %}
-            <!-- home page only -->
-        {% endblock %}
+      <div class="auth-tabs">
+        <button class="tab-btn active" data-tab="login">Login</button>
+        <button class="tab-btn" data-tab="register">Register</button>
+      </div>
+
+      <div class="tab-content active" id="tab-login">
+        <form action="/user-login" method="POST">
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-field password-field">
+            <label>Password</label>
+            <input type="password" name="password" id="login-password" placeholder="••••••••" required>
+            <button type="button" class="eye-btn" data-target="login-password">👁</button>
+          </div>
+          <button class="submit-btn" type="submit">Sign In</button>
+        </form>
+        <p class="terms">No account? <a href="#" data-tab="register" class="switch-tab">Create one →</a></p>
+      </div>
+
+      <div class="tab-content" id="tab-register">
+        <form action="/register" method="POST">
+          <div class="form-field">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-field password-field">
+            <label>Password</label>
+            <input type="password" name="password" id="register-password" placeholder="Create a password" required>
+            <button type="button" class="eye-btn" data-target="register-password">👁</button>
+          </div>
+          <button class="submit-btn" type="submit">Create Account</button>
+        </form>
+        <p class="terms">Have an account? <a href="#" data-tab="login" class="switch-tab">Sign in →</a></p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-container">
+        {% for category, message in messages %}
+          <div class="flash-message flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
   </main>
 
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-content">
-      <div class="social-links">
-        <a href="#" aria-label="Instagram"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
-        <a href="#" aria-label="Facebook"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
-        <a href="#" aria-label="Twitter"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+    <div class="footer-inner">
+      <div class="footer-top">
+
+        <div class="footer-col footer-brand-col">
+          <div class="footer-logo">
+            <span class="brand-stay">STAY</span>
+            <span class="brand-trad">TRADITIONAL</span>
+          </div>
+          <p class="footer-tagline">Rooted in heritage.<br>Crafted for today.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram" class="social-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="social-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter" class="social-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <ul class="footer-list">
+            <li><a href="/shop">Shop All</a></li>
+            <li><a href="/about-us">Our Story</a></li>
+            <li><a href="/sustainability">Sustainability</a></li>
+            <li><a href="/contact-us">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Account</h4>
+          <ul class="footer-list">
+            <li><a href="/my-orders">My Orders</a></li>
+            <li><a href="/cart">Cart</a></li>
+            {% if not session.get("user_name") %}
+            <li><a href="#" id="footer-login-btn">Login / Register</a></li>
+            {% else %}
+            <li><a href="/user-logout">Logout</a></li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Get in Touch</h4>
+          <p class="footer-contact-text">Questions? We'd love to hear from you.</p>
+          <a href="/contact-us" class="footer-cta">Write to Us →</a>
+          <p class="footer-hours">Mon–Sat &nbsp;·&nbsp; 10am – 6pm IST</p>
+        </div>
+
       </div>
-      <p>STAY TRADITIONAL. All rights reserved.</p>
+
+      <div class="footer-bottom">
+        <p>© <span id="footer-year"></span> Stay Traditional. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Shipping</a>
+        </div>
+      </div>
     </div>
   </footer>
 

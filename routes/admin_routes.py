@@ -20,8 +20,6 @@ def allowed_file(filename):
 @admin_required
 def add_product():
 
-    print("Session:", session)     #temporary debug statement to check session contents
-
     if request.method == "POST":
 
         validation_error = validate_product_form(request.form)
@@ -29,20 +27,35 @@ def add_product():
             flash(validation_error, "error")
             return redirect("/admin/add-product")
 
-        name = request.form.get("name")
-        description = request.form.get("description")
-        price = float(request.form.get("price"))
-        stock = int(request.form.get("stock"))
+        # basic fields
+        name           = request.form.get("name")
+        description    = request.form.get("description")
+        price          = float(request.form.get("price"))
+        original_price = request.form.get("original_price")
+        stock          = int(request.form.get("stock"))
 
+        # dropdown fields
+        material    = request.form.get("material")
+        fit         = request.form.get("fit")
+        care        = request.form.get("care")
+        fabric_care = request.form.get("fabric_care")
+
+        # multi-select fields (checkboxes return a list)
+        sizes    = request.form.getlist("sizes")
+        occasion = request.form.getlist("occasion")
+
+        # shipping is constant — no input needed
+        shipping = "Free standard shipping on orders above ₹999. Delivery within 5–7 business days. Express delivery available at checkout. Orders are processed within 24 hours on business days."
+
+        # slug generation
         slug = generate_slug(name)
-
         existing = products_collection.find_one({"slug": slug})
         if existing:
             slug = f"{slug}-{uuid.uuid4().hex[:6]}"
 
+        # image uploads
         files = request.files.getlist("images")
         image_filenames = []
-
         for file in files:
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
@@ -53,12 +66,22 @@ def add_product():
                 image_filenames.append(f"/static/uploads/{unique_name}")
 
         product = {
-            "name": name,
-            "description": description,
-            "price": price,
-            "stock": stock,
-            "slug": slug,
-            "images": image_filenames
+            "name":           name,
+            "slug":           slug,
+            "description":    description,
+            "price":          price,
+            "original_price": float(original_price) if original_price else None,
+            "stock":          stock,
+            "material":       material,
+            "fit":            fit,
+            "occasion":       occasion,        # list e.g. ["Festive", "Casual"]
+            "sizes":          sizes,           # list e.g. ["S", "M", "L"]
+            "care":           care,
+            "fabric_care":    fabric_care,
+            "shipping":       shipping,
+            "images":         image_filenames,
+            "rating":         0.0,
+            "reviews_count":  0,
         }
 
         products_collection.insert_one(product)

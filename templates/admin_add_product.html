@@ -17,30 +17,139 @@
 
   <form id="productForm" class="admin-form" method="POST" enctype="multipart/form-data">
 
+    <!-- NAME -->
     <div class="form-group">
       <label class="form-label">Product Name</label>
       <input class="form-input" type="text" name="name" placeholder="e.g. Green Damask Kurta" required>
     </div>
 
+    <!-- DESCRIPTION -->
     <div class="form-group">
-      <label class="form-label">Description</label>
-      <textarea class="form-input form-textarea" name="description" placeholder="Describe the product..." required></textarea>
+      <label class="form-label">Description <span class="form-hint">(minimum 5 lines)</span></label>
+      <textarea class="form-input form-textarea" name="description" rows="6" placeholder="Describe the product in detail — fabric, design, occasions, craftsmanship..." required></textarea>
+      <small class="char-hint" id="desc-hint"></small>
     </div>
 
+    <!-- PRICE + ORIGINAL PRICE + STOCK -->
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Price (₹)</label>
-        <input class="form-input" type="number" step="0.01" name="price" placeholder="0.00" required>
+        <input class="form-input" type="number" step="0.01" name="price" placeholder="1299" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Original Price (₹) <span class="form-hint">(for strikethrough)</span></label>
+        <input class="form-input" type="number" step="0.01" name="original_price" placeholder="1599">
       </div>
       <div class="form-group">
         <label class="form-label">Stock</label>
-        <input class="form-input" type="number" name="stock" placeholder="0" required>
+        <input class="form-input" type="number" name="stock" placeholder="50" required>
       </div>
     </div>
 
+    <!-- MATERIAL -->
+    <div class="form-group">
+      <label class="form-label">Material</label>
+      <select class="form-input form-select" name="material" required>
+        <option value="" disabled selected>Select material</option>
+        <option>100% Cotton</option>
+        <option>Cotton Blend</option>
+        <option>Silk</option>
+        <option>Linen</option>
+        <option>Rayon</option>
+        <option>Chanderi</option>
+        <option>Georgette</option>
+      </select>
+    </div>
+
+    <!-- FIT -->
+    <div class="form-group">
+      <label class="form-label">Fit</label>
+      <select class="form-input form-select" name="fit" required>
+        <option value="" disabled selected>Select fit</option>
+        <option>Regular Fit</option>
+        <option>Slim Fit</option>
+        <option>Relaxed Fit</option>
+        <option>Oversized</option>
+      </select>
+    </div>
+
+    <!-- OCCASION — multi checkboxes -->
+    <div class="form-group">
+      <label class="form-label">Occasion</label>
+      <div class="checkbox-group">
+        <label class="checkbox-item">
+          <input type="checkbox" name="occasion" value="Festive"> Festive
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="occasion" value="Casual"> Casual
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="occasion" value="Wedding"> Wedding
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="occasion" value="Party"> Party
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="occasion" value="Daily Wear"> Daily Wear
+        </label>
+      </div>
+    </div>
+
+    <!-- SIZES — multi checkboxes -->
+    <div class="form-group">
+      <label class="form-label">Available Sizes</label>
+      <div class="checkbox-group">
+        <label class="checkbox-item">
+          <input type="checkbox" name="sizes" value="S"> S
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sizes" value="M"> M
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sizes" value="L"> L
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sizes" value="XL"> XL
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sizes" value="XXL"> XXL
+        </label>
+      </div>
+    </div>
+
+    <!-- CARE -->
+    <div class="form-group">
+      <label class="form-label">Care Instructions</label>
+      <select class="form-input form-select" name="care" required>
+        <option value="" disabled selected>Select care instruction</option>
+        <option>Machine wash cold, gentle cycle</option>
+        <option>Hand wash only</option>
+        <option>Dry clean only</option>
+        <option>Cold wash, gentle cycle</option>
+      </select>
+    </div>
+
+    <!-- FABRIC CARE (accordion text) -->
+    <div class="form-group">
+      <label class="form-label">Fabric Care Detail <span class="form-hint">(shown in accordion)</span></label>
+      <select class="form-input form-select" name="fabric_care" required>
+        <option value="" disabled selected>Select fabric care detail</option>
+        <option value="Machine wash cold on a gentle cycle. Do not bleach. Tumble dry low or hang to dry. Iron on medium heat. Dry clean recommended for best results to preserve the fabric's texture and colour.">
+          Machine wash — Standard
+        </option>
+        <option value="Hand wash in cold water with mild detergent. Do not wring or twist. Lay flat to dry in shade. Iron on low heat with a pressing cloth to protect the fabric.">
+          Hand wash — Delicate
+        </option>
+        <option value="Dry clean only. Do not wash at home. Store in a breathable garment bag. Iron on low heat on reverse side only.">
+          Dry clean only
+        </option>
+      </select>
+    </div>
+
+    <!-- IMAGES -->
     <div class="form-group">
       <label class="form-label">Product Images</label>
-      <div class="file-upload-grid">
+      <div class="file-upload-grid" id="uploadGrid">
 
         <label class="file-upload-box">
           <input type="file" name="images" accept="image/*" hidden>
@@ -59,6 +168,11 @@
           <span class="file-upload-icon">+</span>
           <span class="file-upload-text">Image 3</span>
         </label>
+
+        <div class="file-upload-box add-more-box" id="addMoreBox">
+          <span class="file-upload-icon">+</span>
+          <span class="file-upload-text">Add More</span>
+        </div>
 
       </div>
     </div>

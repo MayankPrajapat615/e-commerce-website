@@ -1,92 +1,469 @@
 {% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/product.css') }}"/>
+{% endblock %}
+
 {% block content %}
-    <section class="page">
-        <div class="inside-page">
-            <div class="product-page">
-                <div class="product-image">
-                    <img src="{{ url_for('static', filename='images/k1.jpeg') }}" alt="Green Damask Kurta">
-                </div>
-                <div class="product-info">
-                    <h3>Green Damask Kurta</h3>
-                    <p>A timeless damask weave crafted from 100% breathable cotton. Designed for festive occasions and casual elegance, this kurta blends traditional artistry with modern comfort. Hand-finished with precision stitching and a classic mandarin collar.</p>
 
-                    <div class="product-rating">
-                        ★★★★☆ <span>128 reviews</span>
-                    </div>
-                    
-                    <div class="size-container">
-                        <h4 class="size-text">Size</h4>
-                        <p class="size-title">S</p>
-                    </div>
-                    
-                    <p class="product-price">₹ 1,299 <span class="price-original">₹ 1,599</span></p>
-                    
-                    <div class="product-meta">
-                        <p><strong>Material:</strong> 100% Cotton</p>
-                        <p><strong>Fit:</strong> Regular Fit</p>
-                        <p><strong>Occasion:</strong> Festive, Casual</p>
-                        <p><strong>Care:</strong> Machine wash cold, gentle cycle</p>
-                    </div>
-                    
-                    <div class="product-actions">
-                        <button class="btn-add-cart">Add to Cart</button>
-                        <button class="btn-wishlist">♡</button>
-                    </div>
-                    
-                    <div class="product-actions">
-                        <button class="btn-buy-now" type="button">BUY NOW</button>
-                    </div>
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-inner">
+    <a href="/">Home</a>
+    <span class="bc-sep">›</span>
+    <a href="/shop">Shop</a>
+    <span class="bc-sep">›</span>
+    {% if product.occasion %}
+      <a href="/shop?occasion={{ product.occasion[0] }}">{{ product.occasion[0] }}</a>
+      <span class="bc-sep">›</span>
+    {% endif %}
+    <span class="bc-current">{{ product.name }}</span>
+  </div>
+</div>
 
-                    <div class="product-features">
-                        <div class="feat-card">
-                            <img src="{{ url_for('static', filename='icons/delivery_truck_speed_26dp_000000_FILL0_wght400_GRAD0_opsz24.svg') }}" alt="Quality Assurance">
-                            <p class="feat-text">Free Returns & Exchanges</p>
-                        </div>
-                        <div class="feat-card">
-                            <img src="{{ url_for('static', filename='icons/hand_package_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg') }}" alt="Quality Assurance">
-                            <p class="feat-text">Quality Assurance</p>
-                        </div>
-                    </div>
-                        
-                    <!-- Description / Shipping / Fabric Care Accordion -->
-                    <div class="accordion-container">
-                    
-                      <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                          <span>Description</span>
-                          <span class="accordion-icon">+</span>
-                        </div>
-                        <div class="accordion-body">
-                          <p>A timeless damask weave crafted from 100% breathable cotton. Designed for festive occasions and casual elegance, this kurta blends traditional artistry with modern comfort. Hand-finished with precision stitching and a classic mandarin collar.</p>
-                        </div>
-                      </div>
-                  
-                      <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                          <span>Shipping</span>
-                          <span class="accordion-icon">+</span>
-                        </div>
-                        <div class="accordion-body">
-                          <p>Free standard shipping on orders above ₹999. Delivery within 5–7 business days. Express delivery available at checkout. Orders are processed within 24 hours on business days.</p>
-                        </div>
-                      </div>
-                  
-                      <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                          <span>Fabric Care</span>
-                          <span class="accordion-icon">+</span>
-                        </div>
-                        <div class="accordion-body">
-                          <p>Machine wash cold on a gentle cycle. Do not bleach. Tumble dry low or hang to dry. Iron on medium heat. Dry clean recommended for best results to preserve the fabric's texture and colour.</p>
-                        </div>
-                      </div>
-                  
-                    </div>
+<!-- MAIN PRODUCT SECTION -->
+<section class="product-section">
+  <div class="product-layout">
 
-                </div> 
-            </div>
+    <!-- ===== LEFT: IMAGE GALLERY ===== -->
+    <div class="gallery-wrap">
+
+      <!-- Thumbnail strip (desktop: vertical, mobile: horizontal) -->
+      {% if product.images|length > 1 %}
+      <div class="thumb-strip">
+        {% for image in product.images %}
+        <button class="thumb-btn {% if loop.first %}active{% endif %}" onclick="switchImage(this, '{{ image }}')" aria-label="View image {{ loop.index }}">
+          <img src="{{ image }}" alt="{{ product.name }} view {{ loop.index }}">
+        </button>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Main image -->
+      <div class="main-image-wrap">
+        {% if product.original_price and product.original_price > product.price %}
+          {% set disc = ((product.original_price - product.price) / product.original_price * 100) | int %}
+          <span class="img-badge discount-badge">{{ disc }}% OFF</span>
+        {% endif %}
+        {% if product.stock is defined and product.stock <= 10 and product.stock > 0 %}
+          <span class="img-badge stock-badge">Only {{ product.stock }} left</span>
+        {% endif %}
+
+        <img src="{{ product.images[0] }}" alt="{{ product.name }}" id="main-product-image" class="main-img">
+
+        <!-- Zoom hint -->
+        <span class="zoom-hint">Hover to zoom</span>
+      </div>
+    </div>
+
+    <!-- ===== RIGHT: PRODUCT INFO ===== -->
+    <div class="product-info">
+
+      <!-- Occasion tags -->
+      {% if product.occasion %}
+      <div class="occasion-tags">
+        {% for occ in product.occasion %}
+        <a href="/shop?occasion={{ occ }}" class="occ-tag">{{ occ }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Name -->
+      <h1 class="product-name">{{ product.name }}</h1>
+
+      <!-- Rating row -->
+      <div class="rating-row">
+        <div class="stars-wrap">
+          {% set full = product.rating | int %}
+          {% set has_half = (product.rating - full) >= 0.5 %}
+          {% for i in range(full) %}<span class="star filled">★</span>{% endfor %}
+          {% if has_half %}<span class="star half">★</span>{% endif %}
+          {% for i in range(5 - full - (1 if has_half else 0)) %}<span class="star empty">★</span>{% endfor %}
         </div>
-    </section>
+        {% if product.reviews_count > 0 %}
+          <a href="#reviews-section" class="rating-count">{{ product.reviews_count }} review{{ 's' if product.reviews_count != 1 }}</a>
+        {% else %}
+          <span class="rating-none">No reviews yet</span>
+        {% endif %}
+      </div>
 
-    <script src="{{ url_for('static', filename='js/product.js') }}"></script>
+      <!-- Short description -->
+      <p class="product-blurb">{{ product.description }}</p>
+
+      <!-- Price block -->
+      <div class="price-block">
+        <span class="price-now">₹{{ product.price | int }}</span>
+        {% if product.original_price and product.original_price > product.price %}
+          <span class="price-was">₹{{ product.original_price | int }}</span>
+          {% set disc = ((product.original_price - product.price) / product.original_price * 100) | int %}
+          <span class="price-save">Save ₹{{ (product.original_price - product.price) | int }}</span>
+        {% endif %}
+      </div>
+      <p class="tax-note">Inclusive of all taxes. Free shipping on orders above ₹999.</p>
+
+      <!-- Quick specs row -->
+      <div class="quick-specs">
+        {% if product.material %}
+        <div class="spec-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 6v6l4 2"/></svg>
+          {{ product.material }}
+        </div>
+        {% endif %}
+        {% if product.fit %}
+        <div class="spec-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/></svg>
+          {{ product.fit }}
+        </div>
+        {% endif %}
+        {% if product.care %}
+        <div class="spec-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          {{ product.care }}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Divider -->
+      <div class="info-divider"></div>
+
+      <!-- SIZE SELECTOR -->
+      {% if product.sizes %}
+      <div class="size-section">
+        <div class="size-header">
+          <span class="size-label">Select Size</span>
+          <button class="size-guide-btn" onclick="openSizeGuide()" type="button">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10H7"/><path d="M21 6H3"/><path d="M21 14H3"/><path d="M21 18H7"/></svg>
+            Size Guide
+          </button>
+        </div>
+        <div class="size-options">
+          {% for size in product.sizes %}
+          <button class="size-btn" onclick="selectSize(this)" type="button">{{ size }}</button>
+          {% endfor %}
+        </div>
+        <p class="size-hint" id="size-hint" style="display:none;">Please select a size to continue.</p>
+      </div>
+      {% endif %}
+
+      <!-- ACTIONS -->
+      <div class="action-row">
+        <button class="btn-cart"
+          id="add-to-cart-btn"
+          data-product-id="{{ product._id }}"
+          data-product-name="{{ product.name }}"
+          data-product-price="{{ product.price }}"
+          data-product-image="{{ product.images[0] }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          Add to Cart
+        </button>
+        <button class="btn-wishlist" id="wishlist-btn" aria-label="Add to wishlist">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+      </div>
+      <button class="btn-buynow" id="buy-now-btn" type="button"
+        data-product-id="{{ product._id }}"
+        data-product-name="{{ product.name }}"
+        data-product-price="{{ product.price }}"
+        data-product-image="{{ product.images[0] }}">
+        Buy Now
+      </button>
+
+      <!-- TRUST STRIP -->
+      <div class="trust-strip">
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div>
+            <span class="trust-title">Free Delivery</span>
+            <span class="trust-sub">Orders above ₹999</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="trust-title">Quality Assured</span>
+            <span class="trust-sub">Handpicked fabrics</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          </div>
+          <div>
+            <span class="trust-title">Easy Returns</span>
+            <span class="trust-sub">7-day hassle-free</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div>
+            <span class="trust-title">Secure Payment</span>
+            <span class="trust-sub">UPI, Cards & more</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCORDION -->
+      <div class="accordion-container">
+
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Product Details</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <div class="detail-grid">
+              {% if product.material %}
+              <div class="detail-row"><span class="detail-key">Material</span><span class="detail-val">{{ product.material }}</span></div>
+              {% endif %}
+              {% if product.fit %}
+              <div class="detail-row"><span class="detail-key">Fit</span><span class="detail-val">{{ product.fit }}</span></div>
+              {% endif %}
+              {% if product.occasion %}
+              <div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">{{ product.occasion | join(", ") }}</span></div>
+              {% endif %}
+              {% if product.care %}
+              <div class="detail-row"><span class="detail-key">Care</span><span class="detail-val">{{ product.care }}</span></div>
+              {% endif %}
+              {% if product.sizes %}
+              <div class="detail-row"><span class="detail-key">Sizes</span><span class="detail-val">{{ product.sizes | join(", ") }}</span></div>
+              {% endif %}
+              <div class="detail-row"><span class="detail-key">SKU</span><span class="detail-val">{{ product.slug | upper }}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Fabric & Care</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            {% if product.fabric_care %}
+            <p>{{ product.fabric_care }}</p>
+            {% else %}
+            <p>{{ product.care }}</p>
+            {% endif %}
+            <div class="care-icons">
+              <div class="care-icon-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6l3 1M3 6v11a1 1 0 001 1h4V6H3z"/><path d="M16 6l3 1M21 6v11a1 1 0 01-1 1h-4V6h5z"/><path d="M8 6v12h8V6"/><path d="M8 6l4-3 4 3"/></svg>
+                <span>Machine wash cold</span>
+              </div>
+              <div class="care-icon-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><line x1="4.22" y1="4.22" x2="19.78" y2="19.78"/></svg>
+                <span>No bleach</span>
+              </div>
+              <div class="care-icon-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span>Tumble dry low</span>
+              </div>
+              <div class="care-icon-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h12M6 21h12M9 3v18M15 3v18"/></svg>
+                <span>Iron medium heat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Shipping & Delivery</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>{{ product.shipping }}</p>
+            <div class="shipping-steps">
+              <div class="ship-step">
+                <div class="ship-dot"></div>
+                <div><strong>Order placed</strong><br><span>Processing within 24hrs</span></div>
+              </div>
+              <div class="ship-step">
+                <div class="ship-dot"></div>
+                <div><strong>Dispatched</strong><br><span>Handed to courier</span></div>
+              </div>
+              <div class="ship-step">
+                <div class="ship-dot active-dot"></div>
+                <div><strong>Delivered</strong><br><span>5–7 business days</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Returns & Exchange</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>We offer a <strong>7-day hassle-free return</strong> policy. If you are not completely satisfied with your purchase, you can return the item in its original condition with tags intact. Exchange requests for size are processed free of charge.</p>
+            <ul class="return-list">
+              <li>Item must be unused and in original packaging</li>
+              <li>Tags must be attached</li>
+              <li>Raise a return request via My Orders within 7 days</li>
+              <li>Refund processed within 5–7 business days</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- end product-info -->
+
+  </div>
+  <!-- end product-layout -->
+</section>
+
+
+<!-- ===== REVIEWS SECTION ===== -->
+<section class="reviews-section" id="reviews-section">
+  <div class="reviews-inner">
+    <div class="reviews-header">
+      <h2 class="section-title">Customer Reviews</h2>
+      {% if product.reviews_count > 0 %}
+        <div class="overall-rating">
+          <span class="big-rating">{{ product.rating }}</span>
+          <div>
+            <div class="stars-wrap">
+              {% set full = product.rating | int %}
+              {% for i in range(full) %}<span class="star filled">★</span>{% endfor %}
+              {% for i in range(5 - full) %}<span class="star empty">★</span>{% endfor %}
+            </div>
+            <span class="rating-subtext">Based on {{ product.reviews_count }} review{{ 's' if product.reviews_count != 1 }}</span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if product.reviews_count == 0 %}
+    <div class="no-reviews">
+      <div class="no-reviews-icon">✦</div>
+      <p>Be the first to review this product.</p>
+      <p class="no-reviews-sub">Share your experience and help others make better choices.</p>
+    </div>
+    {% endif %}
+
+    <!-- Review write CTA -->
+    <div class="write-review-bar">
+      <p>Purchased this? Share your thoughts.</p>
+      <button class="btn-write-review" onclick="openReviewModal()">Write a Review</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== YOU MAY ALSO LIKE ===== -->
+{% if related_products %}
+<section class="related-section">
+  <div class="related-inner">
+    <div class="related-header">
+      <h2 class="section-title">You May Also Like</h2>
+      <a href="/shop" class="view-all-link">View All →</a>
+    </div>
+    <div class="related-grid">
+      {% for rp in related_products %}
+      <a href="/product/{{ rp.slug }}" class="related-card">
+        <div class="related-img-wrap">
+          <img src="{{ rp.images[0] }}" alt="{{ rp.name }}" class="related-img" loading="lazy">
+          {% if rp.original_price and rp.original_price > rp.price %}
+            {% set rdisc = ((rp.original_price - rp.price) / rp.original_price * 100) | int %}
+            <span class="related-badge">{{ rdisc }}% OFF</span>
+          {% endif %}
+        </div>
+        <div class="related-info">
+          <p class="related-name">{{ rp.name }}</p>
+          <div class="related-price-row">
+            <span class="related-price">₹{{ rp.price | int }}</span>
+            {% if rp.original_price and rp.original_price > rp.price %}
+            <span class="related-original">₹{{ rp.original_price | int }}</span>
+            {% endif %}
+          </div>
+          <div class="related-stars">
+            {% set rf = rp.rating | int %}
+            {% for i in range(rf) %}<span class="star filled" style="font-size:0.75rem;">★</span>{% endfor %}
+            {% for i in range(5 - rf) %}<span class="star empty" style="font-size:0.75rem;">★</span>{% endfor %}
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+<!-- ===== SIZE GUIDE MODAL ===== -->
+<div class="modal-overlay" id="size-guide-overlay" onclick="closeSizeGuide()">
+  <div class="size-guide-modal" onclick="event.stopPropagation()">
+    <div class="sgm-header">
+      <h3>Size Guide</h3>
+      <button onclick="closeSizeGuide()" class="sgm-close">&times;</button>
+    </div>
+    <p class="sgm-note">All measurements are in <strong>inches</strong>. For best fit, measure over a light shirt.</p>
+    <div class="sgm-table-wrap">
+      <table class="sgm-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Chest</th>
+            <th>Waist</th>
+            <th>Hip</th>
+            <th>Kurta Length</th>
+            <th>Shoulder</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>S</td><td>36–37</td><td>30–31</td><td>37–38</td><td>42</td><td>16.5</td></tr>
+          <tr><td>M</td><td>38–39</td><td>32–33</td><td>39–40</td><td>43</td><td>17</td></tr>
+          <tr><td>L</td><td>40–41</td><td>34–35</td><td>41–42</td><td>44</td><td>17.5</td></tr>
+          <tr><td>XL</td><td>42–43</td><td>36–37</td><td>43–44</td><td>45</td><td>18</td></tr>
+          <tr><td>XXL</td><td>44–46</td><td>38–40</td><td>45–47</td><td>46</td><td>18.5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sgm-tip">💡 <strong>Tip:</strong> If you're between sizes, size up for a more comfortable kurta fit.</p>
+  </div>
+</div>
+
+
+<!-- ===== REVIEW MODAL ===== -->
+<div class="modal-overlay" id="review-modal-overlay" onclick="closeReviewModal()">
+  <div class="review-modal" onclick="event.stopPropagation()">
+    <div class="sgm-header">
+      <h3>Write a Review</h3>
+      <button onclick="closeReviewModal()" class="sgm-close">&times;</button>
+    </div>
+    <form class="review-form" onsubmit="submitReview(event)">
+      <div class="rf-field">
+        <label>Your Rating</label>
+        <div class="star-picker" id="star-picker">
+          <span class="pick-star" data-val="1">★</span>
+          <span class="pick-star" data-val="2">★</span>
+          <span class="pick-star" data-val="3">★</span>
+          <span class="pick-star" data-val="4">★</span>
+          <span class="pick-star" data-val="5">★</span>
+        </div>
+        <input type="hidden" id="review-rating" value="0">
+      </div>
+      <div class="rf-field">
+        <label>Name</label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+      <div class="rf-field">
+        <label>Review</label>
+        <textarea placeholder="Tell others what you think about this product..." rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit-review">Submit Review</button>
+    </form>
+  </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/product.js') }}"></script>
+
 {% endblock %}

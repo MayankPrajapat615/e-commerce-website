@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, abort
-from db import products_collection
+from db import products_collection   # ← only this, drop "import db"
 
 public_bp = Blueprint("public", __name__)
 
@@ -25,9 +25,33 @@ def shop():
     return render_template("shop.html", products=products)
 
 
-@public_bp.route("/shop/<slug>")
+@public_bp.route("/product/<slug>")
 def product_detail(slug):
     product = products_collection.find_one({"slug": slug})
     if not product:
         abort(404)
-    return render_template("kurta_detail.html", product=product)
+    product["_id"] = str(product["_id"])
+
+    related_products = []
+    if product.get("occasion"):
+        related_cursor = products_collection.find({     # ← was db.products
+            "slug": {"$ne": slug},
+            "occasion": {"$in": product["occasion"]}
+        }).limit(4)
+        related_products = list(related_cursor)
+
+    if len(related_products) < 4:
+        existing_slugs = [slug] + [r["slug"] for r in related_products]
+        extra = products_collection.find({              # ← was db.products
+            "slug": {"$nin": existing_slugs}
+        }).limit(4 - len(related_products))
+        related_products += list(extra)
+
+    for rp in related_products:
+        rp["_id"] = str(rp["_id"])
+
+    return render_template(
+        "kurta_detail.html",
+        product=product,
+        related_products=related_products
+    )
