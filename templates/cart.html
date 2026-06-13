@@ -26,9 +26,9 @@
               <p class="cart-item-price">₹ {{ item.price | int }}</p>
 
               <div class="cart-item-controls">
-                <button class="qty-btn" onclick="updateQty('{{ item.product_id }}', {{ item.quantity - 1 }})">−</button>
+                <button class="qty-btn" onclick="changeQty('{{ item.product_id }}', -1)">−</button>
                 <span class="qty-display" id="qty-{{ item.product_id }}">{{ item.quantity }}</span>
-                <button class="qty-btn" onclick="updateQty('{{ item.product_id }}', {{ item.quantity + 1 }})">+</button>
+                <button class="qty-btn" onclick="changeQty('{{ item.product_id }}', +1)">+</button>
               </div>
             </div>
 
@@ -78,6 +78,13 @@
 
   </div>
 </section>
-
+<script>
+  function changeQty(productId, delta) {
+    const qtyEl = document.getElementById("qty-" + productId);
+    const currentQty = parseInt(qtyEl.textContent);
+    const newQty = currentQty + delta;
+    updateQty(productId, newQty);
+  }
+</script>
 <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
 {% endblock %}
